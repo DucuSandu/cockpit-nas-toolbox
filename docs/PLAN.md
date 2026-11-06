@@ -114,7 +114,7 @@ Moving from the registry to plain smb.conf is a one-time step in the installer: 
 
 Presets fill in groups, folders and checkboxes at first run, and everything stays editable. The **Family** preset is based on Ducu's real setup and is the example below; **Small office** and **Just me** work the same way. The names below are the example's, not built into the code.
 
-- **People and groups**: radu, andreea (parents, in Supervisors), vlad, eliza (kids, in Users). All logins have no shell.
+- **People and groups**: radu, andreea (parents, in Supervisors), vlad, eliza (kids, in Users). Users have no shell (`nologin`); Supervisors get a real shell only so Cockpit can log them in, with SSH blocked for their group.
 - **Family space is curated by parents**: `shared` (memories, docs, multimedia, misc) is read for everyone and writable only by parents (`write list = @parents`). Files there are written as the service user `nas` (uid/gid 1000, `force user` / `force group = nas`, masks 0664 / 2775), so Samba, Nextcloud and Immich never fight over permissions. The plugin hides `nas` from People and never lets it be disabled, removed or given a password.
 - **Home folders with real owners**: `/mnt/homes/<name>`, owned by the person, group parents, mode 2770 (no `force user` there).
 - **home** share (`path = /mnt/homes/%U`): each person lands in their own folder and sees nothing else. Ten people still means one share in smb.conf.
@@ -352,6 +352,7 @@ Each phase ships as its own paste-and-run installer (preview by default, `--run`
 - Storage quota per user (warnings only on Samba); recycle-bin restore always allowed.
 - File browser: **Cockpit Files** (`cockpit-files` 46 from `trixie-backports`, checked on vera-nas on Nov 6, 2026). Navigator is no longer needed.
 - Help: a **Help** entry in the left menu plus a **"?"** button on every page that opens the matching topic. One Markdown source in the repo, bundled with the plugin so it works offline, and published as the docs website. Translatable like the rest of the UI.
+- **Supervisor login**: a real shell so Cockpit can log them in, SSH blocked for the Supervisors group (`DenyGroups` in sshd), no admin access beyond the narrow sudo rule. Cockpit's Terminal page giving them an unprivileged shell is accepted.
 - Supervisors reset passwords through a **narrow sudo rule**: they may run only the helper's people actions (password, enable, disable) for members of the Users group. The helper checks who called it (`SUDO_USER`).
 - **One password, partial failure**: keep what worked, mark the person **Out of sync** for the system that failed, and offer **Retry** or a **Fix manually** help page with the exact steps.
 - The existing **cockpit-immich** plugin and immich-curate scripts **stay as they are for now**. Replacing them is tested later on a separate test LXC.
