@@ -352,6 +352,9 @@ Each phase ships as its own paste-and-run installer (preview by default, `--run`
 - Storage quota per user (warnings only on Samba); recycle-bin restore always allowed.
 - File browser: **Cockpit Files** (`cockpit-files` 46 from `trixie-backports`, checked on vera-nas on Nov 6, 2026). Navigator is no longer needed.
 - Help: a **Help** entry in the left menu plus a **"?"** button on every page that opens the matching topic. One Markdown source in the repo, bundled with the plugin so it works offline, and published as the docs website. Translatable like the rest of the UI.
+- Supervisors reset passwords through a **narrow sudo rule**: they may run only the helper's people actions (password, enable, disable) for members of the Users group. The helper checks who called it (`SUDO_USER`).
+- **One password, partial failure**: keep what worked, mark the person **Out of sync** for the system that failed, and offer **Retry** or a **Fix manually** help page with the exact steps.
+- The existing **cockpit-immich** plugin and immich-curate scripts **stay as they are for now**. Replacing them is tested later on a separate test LXC.
 
 **TBD (parked by Ducu)**
 
