@@ -351,6 +351,7 @@ Each phase ships as its own paste-and-run installer (preview by default, `--run`
 - FTP mirrors Samba access, with an optional upload-only folder.
 - Storage quota per user (warnings only on Samba); recycle-bin restore always allowed.
 - File browser: **Cockpit Files** (`cockpit-files` 46 from `trixie-backports`, checked on vera-nas on Nov 6, 2026). Navigator is no longer needed.
+- Help: a **Help** entry in the left menu plus a **"?"** button on every page that opens the matching topic. One Markdown source in the repo, bundled with the plugin so it works offline, and published as the docs website. Translatable like the rest of the UI.
 
 **TBD (parked by Ducu)**
 
