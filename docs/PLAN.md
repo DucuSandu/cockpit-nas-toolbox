@@ -30,7 +30,7 @@ Yes, it is feasible. **NAS Toolbox** is a **general, shareable Cockpit plugin fo
 
 **How it is shared**
 
-- Open source on GitHub under **GPL-3.0**, with a `.deb` package and a one-line installer that previews first.
+- Open source on GitHub under **GPL-3.0**, installed with a script downloaded from GitHub Releases that previews first (a `.deb` package maybe later).
 - Docs site with screenshots, a "Family NAS in 30 minutes" guide based on Ducu's setup, and a plugin guide for people who want to add their own app.
 
 ## Scope
@@ -354,9 +354,10 @@ Each phase ships as its own paste-and-run installer (preview by default, `--run`
 - Help: a **Help** entry in the left menu plus a **"?"** button on every page that opens the matching topic. One Markdown source in the repo, bundled with the plugin so it works offline, and published as the docs website. Translatable like the rest of the UI.
 - **UI approach: same as Ducu's cockpit-linkdash** (https://github.com/DucuSandu/cockpit-linkdash): plain HTML/JS with no build step and no framework. It loads Cockpit's own `shell.css` for the PatternFly v6 tokens, maps them to the plugin's own CSS variables with no hard-coded colours, and copies Cockpit's `pf-v6-theme-*` class so dark and light mode follow Cockpit. It uses native `<dialog>` for dialogs. Watch out: `../shell/shell.css` is Cockpit-internal, so check it after each Cockpit upgrade.
 - **Translations**: standard gettext `.po` files in `po/` (works with tools like Weblate). The installer converts them to small JSON files, and the page uses Cockpit's current language.
-- **CI (GitHub Actions)** on every PR: Python unit tests and lint, ShellCheck, a JS check, a .deb build, and the integration test in a throwaway Debian 13 container with real Samba.
-- **Releases**: semantic versions (`v0.1.0`) and a `CHANGELOG.md`. Pushing a tag builds the .deb and the installer and attaches them to a GitHub Release.
+- **CI (GitHub Actions)** on every PR: Python unit tests and lint, ShellCheck, a JS check, building the install script, and the integration test in a throwaway Debian 13 container with real Samba.
+- **Releases**: semantic versions (`v0.1.0`) and a `CHANGELOG.md`. Pushing a tag builds the install script and attaches it, with a SHA-256 checksum, to a GitHub Release.
 - **Test box**: a separate unprivileged LXC `nas-test` on Proxmox, snapshotted before each test. vera-nas only gets a version after it passes there.
+- **Install method (for now)**: no .deb. An install script downloaded from the GitHub Release: preview by default, `--run` to install, `--remove` to uninstall. A .deb may come later.
 - **Supervisor login**: a real shell so Cockpit can log them in, SSH blocked for the Supervisors group (`DenyGroups` in sshd), no admin access beyond the narrow sudo rule. Cockpit's Terminal page giving them an unprivileged shell is accepted.
 - Supervisors reset passwords through a **narrow sudo rule**: they may run only the helper's people actions (password, enable, disable) for members of the Users group. The helper checks who called it (`SUDO_USER`).
 - **One password, partial failure**: keep what worked, mark the person **Out of sync** for the system that failed, and offer **Retry** or a **Fix manually** help page with the exact steps.
