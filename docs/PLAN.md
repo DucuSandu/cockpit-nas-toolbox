@@ -350,6 +350,7 @@ Each phase ships as its own paste-and-run installer (preview by default, `--run`
 - Immich, Nextcloud and FTP follow one plugin rule and live in NAS Toolbox's left menu.
 - FTP mirrors Samba access, with an optional upload-only folder.
 - Storage quota per user (warnings only on Samba); recycle-bin restore always allowed.
+- File browser: **Cockpit Files** (`cockpit-files` 46 from `trixie-backports`, checked on vera-nas on Nov 6, 2026). Navigator is no longer needed.
 
 **TBD (parked by Ducu)**
 
@@ -365,4 +366,3 @@ Each phase ships as its own paste-and-run installer (preview by default, `--run`
 - Where Nextcloud runs (this LXC, Docker, AIO or another container) and the exact `occ` command.
 - Which shares exist today in the registry and in smb.conf, so the move to plain smb.conf loses nothing.
 - Whether `samba-ad-dc` (pulled in when Samba was installed) is inactive, so smbd runs as a plain file server.
-- Whether a Cockpit Files package is available for Debian 13 on this box.
